@@ -46,17 +46,6 @@ const canonicalUrl = canonical ?? Astro.url.href;
   <body>
     <StarfieldBackground />
     <Header siteTitle={siteTitle} />
-    <script>
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", (user) => {
-      if (!user) {
-        window.netlifyIdentity.on("login", () => {
-          document.location.href = "/admin/";
-        });
-      }
-    });
-  }
-</script>
     <main>
       <slot />
     </main>
