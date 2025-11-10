@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[Portfolio v2 blog]]></title>
+    <link>https://portfolio-v2.example.com/</link>
+    <description><![CDATA[Full-stack systems engineer crafting star-bright experiences.]]></description>
+    <item>
+      <title><![CDATA[Star-simulator runtimes without burnout]]></title>
+      <link>https://portfolio-v2.example.com/blog/star-simulator-runtime</link>
+      <guid>https://portfolio-v2.example.com/blog/star-simulator-runtime</guid>
+      <pubDate>Mon, 15 Jul 2024 00:00:00 GMT</pubDate>
+      <description><![CDATA[Breaking down how I tuned a constellation visualizer to stream telemetry at 120fps without shipping any fragile JS frameworks.]]></description>
+    </item>
+    <item>
+      <title><![CDATA[Skill trees as engineering protocols]]></title>
+      <link>https://portfolio-v2.example.com/blog/skill-tree-protocol</link>
+      <guid>https://portfolio-v2.example.com/blog/skill-tree-protocol</guid>
+      <pubDate>Wed, 22 May 2024 00:00:00 GMT</pubDate>
+      <description><![CDATA[Documenting my approach to mapping strengths like a video game tree so stakeholders instantly see balance across strategy, craft, and leadership.]]></description>
+    </item>
+    <item>
+      <title><![CDATA[Why Astro still wins for content-heavy apps]]></title>
+      <link>https://portfolio-v2.example.com/blog/astro-case-study</link>
+      <guid>https://portfolio-v2.example.com/blog/astro-case-study</guid>
+      <pubDate>Sat, 02 Mar 2024 00:00:00 GMT</pubDate>
+      <description><![CDATA[A teardown of a commerce site where Astro gave us lighthouse 100s while keeping authoring workflows friendly for non-engineers.]]></description>
+    </item>
+  </channel>
+</rss>

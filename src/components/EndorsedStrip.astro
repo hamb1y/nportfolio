@@ -1,0 +1,40 @@
+---
+import Icon from './Icon.astro';
+import type { Endorsement } from '../lib/content';
+
+const { endorsements } = Astro.props as { endorsements: Endorsement[] };
+const doubled = [...endorsements, ...endorsements];
+---
+<section>
+  <div class="glass-panel">
+    <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1rem;">
+      <Icon name="star" size={20} />
+      <h2 style="margin:0;">Endorsed by</h2>
+    </div>
+    <div class="endorsed-strip" data-endorsement-strip>
+      <div class="endorsed-track">
+        {doubled.map((endorsement, idx) => {
+          const isLink = Boolean(endorsement.url);
+          const Tag = (isLink ? 'a' : 'div') as keyof HTMLElementTagNameMap;
+          const props = isLink
+            ? {
+                href: endorsement.url,
+                target: '_blank',
+                rel: 'noreferrer',
+              }
+            : {};
+          return (
+            <Tag key={`${endorsement.name}-${idx}`} class="endorsement-card" {...props}>
+              {endorsement.logo ? (
+                <img src={endorsement.logo} alt={endorsement.name} loading="lazy" />
+              ) : (
+                <strong>{endorsement.name}</strong>
+              )}
+              <span style="color:var(--muted); font-size:0.9rem;">{endorsement.blurb ?? endorsement.name}</span>
+            </Tag>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,26 @@
+---
+import Icon from './Icon.astro';
+import type { ProjectEntry } from '../lib/content';
+
+const { project, variant = 'grid' } = Astro.props as { project: ProjectEntry; variant?: 'grid' | 'list' };
+---
+<article class={`glass-panel card project-card ${variant}`} data-animate>
+  {project.image && <img src={project.image} alt={project.title + ' hero'} loading="lazy" />}
+  <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;">
+    <div>
+      <h3>{project.title}</h3>
+      <p style="color:var(--muted);">{project.shortDescription}</p>
+    </div>
+    {project.featured && <span class="tag-list"><span>Featured</span></span>}
+  </div>
+  {project.techStack && (
+    <div class="tag-list" style="margin-top:0.5rem;">
+      {project.techStack.map((tech) => (
+        <span>{tech}</span>
+      ))}
+    </div>
+  )}
+  <a class="btn btn-secondary" style="margin-top:1.2rem; display:inline-flex; align-items:center; gap:0.5rem;" href={`/projects/${project.slug}`}>
+    View case study <Icon name="arrow-up-right" size={18} />
+  </a>
+</article>

@@ -1,0 +1,13 @@
+<svg width="1000" height="620" viewBox="0 0 1000 620" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="relay" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e1b4b" />
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="620" fill="url(#relay)" />
+  <path d="M160 460 L340 300 L520 360 L680 200 L860 300" stroke="#fbbf24" stroke-width="5" fill="none" stroke-linecap="round" />
+  <circle cx="340" cy="300" r="24" fill="#22d3ee" />
+  <circle cx="520" cy="360" r="20" fill="#a78bfa" />
+  <circle cx="680" cy="200" r="16" fill="#34d399" />
+</svg>

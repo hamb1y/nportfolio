@@ -1,0 +1,102 @@
+---
+import type { SkillNode } from '../lib/content';
+
+const { skills } = Astro.props as { skills: SkillNode[] };
+
+const nodes: Array<SkillNode & { depth: number; x: number; y: number; parentId?: string }> = [];
+const connectors: Array<{ from: { x: number; y: number }; to: { x: number; y: number } }> = [];
+
+const center = { x: 50, y: 50 };
+const rootRadius = 28;
+const childRadius = 16;
+
+skills.forEach((root, index) => {
+  const angle = (index / skills.length) * Math.PI * 2 - Math.PI / 2;
+  const rootPos = {
+    x: center.x + rootRadius * Math.cos(angle),
+    y: center.y + rootRadius * Math.sin(angle),
+  };
+  nodes.push({ ...root, depth: 0, ...rootPos });
+  connectors.push({ from: center, to: rootPos });
+
+  root.children?.forEach((child, childIndex, arr) => {
+    const spread = 0.5;
+    const offset = (childIndex - (arr.length - 1) / 2) * spread;
+    const childAngle = angle + offset;
+    const distance = rootRadius + childRadius;
+    const childPos = {
+      x: center.x + distance * Math.cos(childAngle),
+      y: center.y + distance * Math.sin(childAngle),
+    };
+    nodes.push({ ...child, depth: 1, ...childPos, parentId: root.id });
+    connectors.push({ from: rootPos, to: childPos });
+  });
+});
+
+const levelToScale = (level: number, depth: number) => {
+  const base = depth === 0 ? 1.1 : 0.95;
+  return base + (level - 3) * 0.08;
+};
+---
+<section class="skill-tree-panel">
+  <div class="glass-panel">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap;">
+      <div>
+        <h2>Skill Tree</h2>
+        <p style="color:var(--muted); max-width:520px;">
+          Rooted in architecture, expressed through writing, always tuned for teams. Hover or tap nodes for details.
+        </p>
+      </div>
+      <span class="tag-list" style="align-self:flex-end;">
+        <span>Level mapped brightness</span>
+        <span>Animated layout</span>
+      </span>
+    </div>
+    <div class="skill-tree-canvas" data-skill-tree>
+      <svg class="skill-connector-layer" viewBox="0 0 100 100" preserveAspectRatio="none">
+        {connectors.map((line) => (
+          <line
+            x1={line.from.x}
+            y1={line.from.y}
+            x2={line.to.x}
+            y2={line.to.y}
+            stroke="rgba(148, 197, 255, 0.45)"
+            stroke-width="0.4"
+          ></line>
+        ))}
+      </svg>
+      <div
+        class="skill-node"
+        data-depth="0"
+        style={{ left: `${center.x}%`, top: `${center.y}%`, transform: 'translate(-50%, -50%) scale(1.1)' }}
+      >
+        Core
+      </div>
+      {nodes.map((node) => (
+        <>
+          <div
+            class="skill-node"
+            data-depth={node.depth}
+            data-skill-id={node.id}
+            style={{
+              left: `${node.x}%`,
+              top: `${node.y}%`,
+              fontSize: `${1 * levelToScale(node.level, node.depth)}rem`,
+              background: node.depth === 0
+                ? 'linear-gradient(120deg, rgba(250, 232, 137, 0.9), rgba(244, 114, 182, 0.9))'
+                : 'linear-gradient(120deg, rgba(125, 211, 252, 0.85), rgba(192, 132, 252, 0.85))',
+              filter: `drop-shadow(0 0 ${node.level * 2}px rgba(125,211,252,0.25))`,
+            }}
+          >
+            {node.label}
+          </div>
+          <div class="skill-popover">
+            <strong>{node.label}</strong>
+            <p style="margin:0.35rem 0 0; font-size:0.95rem; color:var(--muted);">Level {node.level}</p>
+            {node.description && <p style="margin:0.4rem 0 0; color:var(--muted);">{node.description}</p>}
+          </div>
+        </>
+      ))}
+    </div>
+  </div>
+</section>

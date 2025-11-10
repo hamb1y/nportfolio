@@ -1,0 +1,11 @@
+---
+import Layout from '../../components/Layout.astro';
+import BlogListPage from '../../components/BlogListPage.astro';
+import { getSiteSettings, getBlogPosts } from '../../lib/content';
+
+const siteSettings = await getSiteSettings();
+const posts = getBlogPosts();
+---
+<Layout title="Blog" siteSettings={siteSettings}>
+  <BlogListPage posts={posts} />
+</Layout>

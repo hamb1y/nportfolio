@@ -1,0 +1,22 @@
+---
+import BlogCard from './BlogCard.astro';
+import type { BlogPost } from '../lib/content';
+
+const { posts } = Astro.props as { posts: BlogPost[] };
+---
+<section>
+  <div class="glass-panel">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:1rem; flex-wrap:wrap;">
+      <div>
+        <h2>Latest blog posts</h2>
+        <p style="color:var(--muted); max-width:640px;">Stories behind the builds, process notes, and meta reflections.</p>
+      </div>
+      <a href="/blog" class="btn btn-secondary" style="align-self:flex-start;">Visit blog</a>
+    </div>
+    <div class="blog-grid" style="margin-top:2rem;">
+      {posts.map((post) => (
+        <BlogCard post={post} />
+      ))}
+    </div>
+  </div>
+</section>

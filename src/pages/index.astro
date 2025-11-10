@@ -1,16 +1,30 @@
 ---
+import Layout from '../components/Layout.astro';
+import Hero from '../components/Hero.astro';
+import AboutSection from '../components/AboutSection.astro';
+import SkillTree from '../components/SkillTree.astro';
+import ProjectsGrid from '../components/ProjectsGrid.astro';
+import BlogListHome from '../components/BlogListHome.astro';
+import EndorsedStrip from '../components/EndorsedStrip.astro';
+import ContactBlock from '../components/ContactBlock.astro';
+import { getSiteSettings, getFeaturedProjects, getLatestPosts, getEndorsements, getSkills } from '../lib/content';
 
+const siteSettings = await getSiteSettings();
+const projects = getFeaturedProjects(4);
+const posts = getLatestPosts(3);
+const endorsements = siteSettings.showEndorsements !== false ? getEndorsements() : [];
+const skills = siteSettings.showSkillTree !== false ? await getSkills() : [];
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout siteSettings={siteSettings} description={siteSettings.tagline}>
+  <Hero siteSettings={siteSettings} />
+  <AboutSection siteSettings={siteSettings} />
+  {skills.length > 0 && <SkillTree skills={skills} />}
+  <ProjectsGrid
+    projects={projects}
+    title="Highlighted projects"
+    description="A sample of systems that pair glass-panel calm with ruthless technical depth."
+  />
+  <BlogListHome posts={posts} />
+  {endorsements.length > 0 && <EndorsedStrip endorsements={endorsements} />}
+  <ContactBlock siteSettings={siteSettings} />
+</Layout>

@@ -1,0 +1,23 @@
+---
+import Layout from '../../components/Layout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getSiteSettings, getProjects } from '../../lib/content';
+
+const siteSettings = await getSiteSettings();
+const projects = getProjects();
+---
+<Layout title="Projects" siteSettings={siteSettings}>
+  <section>
+    <div class="glass-panel">
+      <h1>Projects</h1>
+      <p style="color:var(--muted); max-width:680px;">
+        Case studies across control rooms, publishing platforms, and observability consoles. Each one keeps bundles tiny and teams confident.
+      </p>
+      <div class="projects-grid" style="margin-top:2rem;">
+        {projects.map((project) => (
+          <ProjectCard project={project} variant="list" />
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

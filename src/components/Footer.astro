@@ -1,0 +1,28 @@
+---
+import Icon from './Icon.astro';
+import type { SiteSettings } from '../lib/content';
+
+const { siteSettings } = Astro.props as { siteSettings: SiteSettings };
+const year = new Date().getFullYear();
+---
+<footer>
+  <div>{siteSettings.tagline ?? 'Building useful interfaces with kindness.'}</div>
+  <div class="hero-social" style="margin-top: 1rem;">
+    {siteSettings.githubUrl && (
+      <a href={siteSettings.githubUrl} target="_blank" rel="noreferrer">
+        <Icon name="github" size={18} /> GitHub
+      </a>
+    )}
+    {siteSettings.tumblrUrl && (
+      <a href={siteSettings.tumblrUrl} target="_blank" rel="noreferrer">
+        <Icon name="pen-square" size={18} /> Tumblr
+      </a>
+    )}
+    {siteSettings.bskyUrl && (
+      <a href={siteSettings.bskyUrl} target="_blank" rel="noreferrer">
+        <Icon name="cloud" size={18} /> Bluesky
+      </a>
+    )}
+  </div>
+  <p>© {year} {siteSettings.siteTitle}. All rights reserved.</p>
+</footer>

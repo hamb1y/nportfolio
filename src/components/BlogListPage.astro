@@ -1,0 +1,25 @@
+---
+import BlogCard from './BlogCard.astro';
+import Icon from './Icon.astro';
+import type { BlogPost } from '../lib/content';
+
+const { posts, heading = 'All posts' } = Astro.props as { posts: BlogPost[]; heading?: string };
+---
+<section>
+  <div class="glass-panel">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:1rem; flex-wrap:wrap;">
+      <div>
+        <h1>{heading}</h1>
+        <p style="color:var(--muted);">Writing across tech, craft, and life-friendly pace.</p>
+      </div>
+      <a href="/rss.xml" class="btn btn-secondary" style="align-self:flex-start; display:inline-flex; gap:0.45rem; align-items:center;">
+        <Icon name="rss" size={18} /> RSS feed
+      </a>
+    </div>
+    <div class="blog-list" style="margin-top:2rem;">
+      {posts.map((post) => (
+        <BlogCard post={post} />
+      ))}
+    </div>
+  </div>
+</section>

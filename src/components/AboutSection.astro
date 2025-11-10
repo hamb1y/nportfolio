@@ -1,0 +1,45 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+import type { SiteSettings } from '../lib/content';
+
+const { siteSettings } = Astro.props as { siteSettings: SiteSettings };
+const highlights: Array<{ icon: IconName; title: string; description: string }> = [
+  {
+    icon: 'sparkles',
+    title: 'Thoughtful delivery',
+    description: 'Runbooks, design audits, and reviews stay calm even when the roadmap is loud.',
+  },
+  {
+    icon: 'compass',
+    title: 'Systems lens',
+    description: 'Architectures stay observable, compliant, and documented for future teammates.',
+  },
+  {
+    icon: 'message-circle',
+    title: 'Approachable partner',
+    description: 'I coach through writing, async rituals, and constructive pairing.',
+  },
+];
+---
+<section id="about">
+  <div class="glass-panel about-grid">
+    <div>
+      <h2>About</h2>
+      <p>{siteSettings.bioShort ?? 'I partner with product teams to build fast, resilient, glassy interfaces that make ops folks feel seen.'}</p>
+      <p>
+        My approach balances clarity with warmth: evidence-driven architecture, designs that breathe, and communication that keeps scope sane. Whether it is a constellation dashboard or a blog launch, the process is visible and humane.
+      </p>
+    </div>
+    <div class="grid two">
+      {highlights.map((item) => (
+        <div class="glass-panel card" style="padding:1.25rem;">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <Icon name={item.icon} size={24} />
+            <h3 style="margin:0; font-size:1.1rem;">{item.title}</h3>
+          </div>
+          <p style="margin-top:0.75rem; color:var(--muted);">{item.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,66 @@
+---
+import StarfieldBackground from './StarfieldBackground.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import type { SiteSettings } from '../lib/content';
+import '../styles/global.css';
+import siteScript from '../scripts/site.ts?url';
+
+const {
+  title,
+  description,
+  ogImage = '/uploads/project-orbital.svg',
+  canonical,
+  siteSettings,
+} = Astro.props as {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonical?: string;
+  siteSettings: SiteSettings;
+};
+
+const siteTitle = siteSettings.siteTitle ?? 'Portfolio';
+const fullTitle = title ? `${title} · ${siteTitle}` : siteTitle;
+const finalDescription = description ?? siteSettings.bioShort ?? siteSettings.tagline ?? '';
+const canonicalUrl = canonical ?? Astro.url.href;
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    {finalDescription && <meta name="description" content={finalDescription} />}
+    <meta property="og:title" content={fullTitle} />
+    {finalDescription && <meta property="og:description" content={finalDescription} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    {finalDescription && <meta name="twitter:description" content={finalDescription} />}
+    <meta name="twitter:image" content={ogImage} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="preload" href="/fonts/Arvo-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+    <link rel="preload" href="/fonts/AlanSans-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+  </head>
+  <body>
+    <StarfieldBackground />
+    <Header siteTitle={siteTitle} />
+    <script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", (user) => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/admin/";
+        });
+      }
+    });
+  }
+</script>
+    <main>
+      <slot />
+    </main>
+    <Footer siteSettings={siteSettings} />
+    <script type="module" src={siteScript}></script>
+  </body>
+</html>

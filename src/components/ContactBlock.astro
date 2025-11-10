@@ -1,0 +1,54 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+import type { SiteSettings } from '../lib/content';
+
+const { siteSettings } = Astro.props as { siteSettings: SiteSettings };
+const contacts = [
+  siteSettings.email
+    ? { label: siteSettings.email, href: `mailto:${siteSettings.email}`, icon: 'mail' satisfies IconName }
+    : null,
+  siteSettings.discord
+    ? { label: siteSettings.discord, href: undefined, icon: 'message-circle' satisfies IconName }
+    : null,
+  siteSettings.githubUrl
+    ? { label: 'GitHub', href: siteSettings.githubUrl, icon: 'github' satisfies IconName }
+    : null,
+  siteSettings.tumblrUrl
+    ? { label: 'Tumblr', href: siteSettings.tumblrUrl, icon: 'pen-square' satisfies IconName }
+    : null,
+  siteSettings.bskyUrl
+    ? { label: 'Bluesky', href: siteSettings.bskyUrl, icon: 'cloud' satisfies IconName }
+    : null,
+].filter(Boolean) as Array<{ label: string; href?: string; icon: IconName }>;
+---
+<section id="contact">
+  <div class="glass-panel contact-block">
+    <h2>Talk with me</h2>
+    <p style="color:var(--muted); max-width:580px; margin:0 auto;">
+      Friendly async chats, structured engagements, or a quick gut check—reach out however works for you.
+    </p>
+    <div class="grid two" style="width:100%;">
+      {contacts.map((contact) => {
+        const isLink = Boolean(contact.href);
+        const Element = (isLink ? 'a' : 'div') as keyof HTMLElementTagNameMap;
+        const props = isLink
+          ? {
+              href: contact.href,
+              target: contact.href?.startsWith('http') ? '_blank' : undefined,
+              rel: contact.href?.startsWith('http') ? 'noreferrer' : undefined,
+            }
+          : {};
+        return (
+          <Element
+            class="glass-panel card"
+            style="display:flex; align-items:center; gap:0.75rem; padding:1rem 1.25rem;"
+            {...props}
+          >
+            <Icon name={contact.icon} size={20} />
+            <span>{contact.label}</span>
+          </Element>
+        );
+      })}
+    </div>
+  </div>
+</section>

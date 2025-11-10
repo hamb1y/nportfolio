@@ -1,0 +1,15 @@
+---
+const { siteTitle } = Astro.props as { siteTitle: string };
+---
+<nav>
+  <div class="navbar glass-panel">
+    <a href="/" class="brand">{siteTitle}</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/#about">About</a>
+      <a href="/projects">Projects</a>
+      <a href="/blog">Blog</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </div>
+</nav>

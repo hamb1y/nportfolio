@@ -1,0 +1,27 @@
+---
+import Icon from './Icon.astro';
+import type { BlogPost } from '../lib/content';
+
+const { post } = Astro.props as { post: BlogPost };
+const date = new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+---
+<article class="glass-panel card blog-card" data-animate>
+  {post.cover && <img src={post.cover} alt={post.title + ' cover'} loading="lazy" />}
+  <div class="post-meta">
+    <span>{date}</span>
+    {post.category && <span>{post.category}</span>}
+    <span>{post.readTime} min read</span>
+  </div>
+  <h3>{post.title}</h3>
+  <p style="color:var(--muted);">{post.summary}</p>
+  {post.tags && (
+    <div class="tag-list">
+      {post.tags.map((tag) => (
+        <span>{tag}</span>
+      ))}
+    </div>
+  )}
+  <a class="btn btn-secondary" style="margin-top:1rem; display:inline-flex; align-items:center; gap:0.5rem;" href={`/blog/${post.slug}`}>
+    Read <Icon name="arrow-up-right" size={18} />
+  </a>
+</article>

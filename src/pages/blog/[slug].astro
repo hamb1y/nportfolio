@@ -1,0 +1,51 @@
+---
+import Layout from '../../components/Layout.astro';
+import Icon from '../../components/Icon.astro';
+import { getSiteSettings, getBlogPosts } from '../../lib/content';
+import type { BlogPost } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const posts = getBlogPosts();
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props as { post: BlogPost };
+const siteSettings = await getSiteSettings();
+const readableDate = new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+const ogImage = post.cover ?? '/uploads/blog-starfield.svg';
+---
+<Layout title={post.title} description={post.summary} ogImage={ogImage} siteSettings={siteSettings}>
+  <section>
+    <div class="glass-panel post-hero">
+      {post.cover && <img src={post.cover} alt={post.title + ' cover'} />}
+      <h1>{post.title}</h1>
+      <div class="post-meta">
+        <span>{readableDate}</span>
+        {post.category && <span>{post.category}</span>}
+        <span>{post.readTime} min read</span>
+      </div>
+      {post.tags && (
+        <div class="tag-list">
+          {post.tags.map((tag) => (
+            <span>{tag}</span>
+          ))}
+        </div>
+      )}
+      <p style="color:var(--muted);">{post.summary}</p>
+      <article class="prose" style="margin-top:1.5rem;">
+        <post.Content />
+      </article>
+      <div style="margin-top:2rem; display:flex; gap:1rem; flex-wrap:wrap;">
+        <a href="/blog" class="btn btn-secondary" style="display:inline-flex; gap:0.4rem; align-items:center;">
+          <Icon name="book-open" size={18} /> Back to posts
+        </a>
+        <a href="/#contact" class="btn" style="display:inline-flex; gap:0.4rem; align-items:center;">
+          <Icon name="send" size={18} /> Talk with me
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

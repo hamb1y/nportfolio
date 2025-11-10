@@ -1,0 +1,26 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import type { ProjectEntry } from '../lib/content';
+
+const {
+  projects,
+  title = 'Projects',
+  description = '',
+} = Astro.props as { projects: ProjectEntry[]; title?: string; description?: string };
+---
+<section>
+  <div class="glass-panel">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:1rem; flex-wrap:wrap;">
+      <div>
+        <h2>{title}</h2>
+        {description && <p style="color:var(--muted); max-width:600px;">{description}</p>}
+      </div>
+      <a href="/projects" class="btn btn-secondary" style="align-self:flex-start;">See all</a>
+    </div>
+    <div class="projects-grid" style="margin-top:2rem;">
+      {projects.map((project) => (
+        <ProjectCard project={project} variant="home" />
+      ))}
+    </div>
+  </div>
+</section>

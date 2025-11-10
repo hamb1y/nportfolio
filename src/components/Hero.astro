@@ -1,0 +1,35 @@
+---
+import Icon from './Icon.astro';
+import type { SiteSettings } from '../lib/content';
+
+const { siteSettings } = Astro.props as { siteSettings: SiteSettings };
+---
+<section class="hero" id="top">
+  <div class="glass-panel">
+    <p class="overline" style="text-transform: uppercase; letter-spacing: 0.4em; font-size: 0.9rem; color: var(--muted);">Portfolio v2</p>
+    <h1>Calm engineering, star-grade polish.</h1>
+    <p>{siteSettings.bioShort ?? 'I build systems that feel like night missions: steady, intentional, and friendly to work with.'}</p>
+    <div class="hero-ctas">
+      <a href="/projects" class="btn">View projects</a>
+      <a href="/#contact" class="btn btn-secondary">Talk with me</a>
+      <a href="/blog" class="btn btn-secondary">Read my blogs</a>
+    </div>
+    <div class="hero-social">
+      {siteSettings.githubUrl && (
+        <a href={siteSettings.githubUrl} target="_blank" rel="noreferrer">
+          <Icon name="github" size={16} /> GitHub
+        </a>
+      )}
+      {siteSettings.email && (
+        <a href={`mailto:${siteSettings.email}`}>
+          <Icon name="mail" size={16} /> Email
+        </a>
+      )}
+      {siteSettings.bskyUrl && (
+        <a href={siteSettings.bskyUrl} target="_blank" rel="noreferrer">
+          <Icon name="cloud" size={16} /> Bluesky
+        </a>
+      )}
+    </div>
+  </div>
+</section>

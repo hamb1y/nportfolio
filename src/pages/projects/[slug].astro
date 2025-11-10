@@ -1,0 +1,51 @@
+---
+import Layout from '../../components/Layout.astro';
+import Icon from '../../components/Icon.astro';
+import { getSiteSettings, getProjects } from '../../lib/content';
+import type { ProjectEntry } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const projects = getProjects();
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props as { project: ProjectEntry };
+const siteSettings = await getSiteSettings();
+const ogImage = project.image ?? '/uploads/project-orbital.svg';
+---
+<Layout title={project.title} description={project.shortDescription} ogImage={ogImage} siteSettings={siteSettings}>
+  <section>
+    <div class="glass-panel project-hero">
+      {project.image && <img src={project.image} alt={project.title + ' case study cover'} />}
+      <h1>{project.title}</h1>
+      <p style="color:var(--muted);">{project.shortDescription}</p>
+      <div class="project-meta">
+        {project.techStack && (
+          <div class="tag-list">
+            {project.techStack.map((tech) => (
+              <span>{tech}</span>
+            ))}
+          </div>
+        )}
+        <div style="display:flex; flex-wrap:wrap; gap:0.75rem;">
+          {project.liveUrl && (
+            <a href={project.liveUrl} target="_blank" rel="noreferrer" class="btn btn-secondary" style="display:inline-flex; gap:0.4rem; align-items:center;">
+              <Icon name="link-2" size={18} /> Live site
+            </a>
+          )}
+          {project.repoUrl && (
+            <a href={project.repoUrl} target="_blank" rel="noreferrer" class="btn btn-secondary" style="display:inline-flex; gap:0.4rem; align-items:center;">
+              <Icon name="github" size={18} /> Repo
+            </a>
+          )}
+        </div>
+      </div>
+      <article class="prose">
+        <project.Content />
+      </article>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,56 @@
+- id: architecture
+  label: "Systems Design"
+  level: 5
+  description: "Calm, methodical architecture for distributed and front-end platforms."
+  children:
+    - id: observability
+      label: "Observability"
+      level: 4
+      description: "Tracing, metrics, and humane dashboards."
+    - id: scaling
+      label: "Scaling"
+      level: 5
+      description: "Perf budgets, profiling, resiliency drills."
+- id: product-engineering
+  label: "Product Engineering"
+  level: 5
+  description: "Lead features from sketch to launch with taste and rigor."
+  children:
+    - id: astro
+      label: "Astro & Islands"
+      level: 5
+      description: "Composable content systems with tiny bundles."
+    - id: api
+      label: "APIs"
+      level: 4
+      description: "Typed contracts, resilient integrations."
+    - id: frontend
+      label: "Interfaces"
+      level: 5
+      description: "Accessibility-first UIs with purposeful motion."
+- id: communication
+  label: "Communication"
+  level: 4
+  description: "Set context clearly, keep teams aligned without drama."
+  children:
+    - id: async-notes
+      label: "Async notes"
+      level: 5
+      description: "Readable specs, changelogs, and runbooks."
+    - id: facilitation
+      label: "Facilitation"
+      level: 4
+      description: "Guide reviews, unblock with questions not ego."
+- id: craft
+  label: "Craft"
+  level: 4
+  description: "Polish, QA discipline, and design partnership."
+  children:
+    - id: design-taste
+      label: "Design taste"
+      level: 4
+      description: "Layout systems, motion that supports narrative."
+    - id: writing
+      label: "Narrative"
+      level: 4
+      description: "Long-form docs and storytelling for launches."
